@@ -34,7 +34,7 @@ void SeplosBms::on_telemetry_data_(const std::vector<uint8_t> &data) {
   uint8_t min_voltage_cell = 0;
   uint8_t max_voltage_cell = 0;
   for (uint8_t i = 0; i < cells; i++) {
-    float cell_voltage = (float) seplos_get_16bit(12 + (i * 2)) * 0.001f; // Starting index adjusted to 10
+    float cell_voltage = (float) seplos_get_16bit(12 + (i * 2)) * 0.001f; // Starting index adjusted to 12
     average_cell_voltage = average_cell_voltage + cell_voltage;
     if (cell_voltage < min_cell_voltage) {
       min_cell_voltage = cell_voltage;
@@ -55,7 +55,7 @@ void SeplosBms::on_telemetry_data_(const std::vector<uint8_t> &data) {
   this->publish_state_(this->delta_cell_voltage_sensor_, max_cell_voltage - min_cell_voltage);
   this->publish_state_(this->average_cell_voltage_sensor_, average_cell_voltage);
 
-  uint8_t offset = 12 + (cells * 2); // Starting index adjusted to 10
+  uint8_t offset = 13 + (cells * 2); // Starting index adjusted to 12
 
   uint8_t temperature_sensors = 6; // Az adat formátuma szerint fixen 6 hőmérséklet szenzor van
   ESP_LOGV(TAG, "Number of temperature sensors: %d", temperature_sensors);
