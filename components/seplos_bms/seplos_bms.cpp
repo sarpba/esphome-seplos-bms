@@ -57,7 +57,7 @@ void SeplosBms::on_telemetry_data_(const std::vector<uint8_t> &data) {
 
   uint8_t offset = 20 + (cells * 2); // Starting index adjusted to 12
 
-  uint8_t temperature_sensors = 6; // Az adat formátuma szerint fixen 6 hőmérséklet szenzor van
+  uint8_t temperature_sensors = 7; // Az adat formátuma szerint fixen 6 hőmérséklet szenzor van
   ESP_LOGV(TAG, "Number of temperature sensors: %d", temperature_sensors);
 
   for (uint8_t i = 0; i < temperature_sensors; i++) {
