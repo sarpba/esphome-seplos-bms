@@ -48,12 +48,12 @@ void SeplosBms::on_telemetry_data_(const std::vector<uint8_t> &data) {
   }
   average_cell_voltage = average_cell_voltage / cells;
 
-  this->publish_state_(this->min_cell_voltage_sensor_, min_cell_voltage);
-  this->publish_state_(this->max_cell_voltage_sensor_, max_cell_voltage);
-  this->publish_state_(this->max_voltage_cell_sensor_, (float) max_voltage_cell);
-  this->publish_state_(this->min_voltage_cell_sensor_, (float) min_voltage_cell);
-  this->publish_state_(this->delta_cell_voltage_sensor_, max_cell_voltage - min_cell_voltage);
-  this->publish_state_(this->average_cell_voltage_sensor_, average_cell_voltage);
+  #this->publish_state_(this->min_cell_voltage_sensor_, min_cell_voltage);
+  #this->publish_state_(this->max_cell_voltage_sensor_, max_cell_voltage);
+  #this->publish_state_(this->max_voltage_cell_sensor_, (float) max_voltage_cell);
+  #this->publish_state_(this->min_voltage_cell_sensor_, (float) min_voltage_cell);
+  #this->publish_state_(this->delta_cell_voltage_sensor_, max_cell_voltage - min_cell_voltage);
+  #this->publish_state_(this->average_cell_voltage_sensor_, average_cell_voltage);
 
   uint8_t offset = 10 + (cells * 2); // Starting index adjusted to 10
 
@@ -64,7 +64,7 @@ void SeplosBms::on_telemetry_data_(const std::vector<uint8_t> &data) {
     float raw_temperature = (float) seplos_get_16bit(offset + 1 + (i * 2));
     this->publish_state_(this->temperatures_[i].temperature_sensor_, (raw_temperature - 2731.0f) * 0.1f);
   }
-  offset = offset + 1 + (temperature_sensors * 2);
+  offset = offset + 33 + (temperature_sensors * 2); # + 1
 
   float current = (float) ((int16_t) seplos_get_16bit(offset)) * 0.01f;
   this->publish_state_(this->current_sensor_, current);
