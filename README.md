@@ -1,4 +1,4 @@
-# esphome-seplos-bms
+# esphome-seplos-bms (folk for CHISAGE CE4810-r)
 
 ESPHome component to monitor Seplos BMS via UART or RS485
 
