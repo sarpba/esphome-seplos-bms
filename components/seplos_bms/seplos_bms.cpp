@@ -86,13 +86,13 @@ void SeplosBms::on_telemetry_data_(const std::vector<uint8_t> &data) {
     return;
   }
 
-  this->publish_state_(this->charging_cycles_sensor_, (float) seplos_get_16bit(offset + 3));
+  this->publish_state_(this->charging_cycles_sensor_, (float) seplos_get_16bit(offset + 13));
 
   if (data.size() < offset + 15 + 2) {
     return;
   }
 
-  this->publish_state_(this->state_of_health_sensor_, (float) seplos_get_16bit(offset + 11) * 0.1f);
+  this->publish_state_(this->state_of_health_sensor_, (float) seplos_get_16bit(offset + 2) * 0.1f);
 
   if (data.size() < offset + 17 + 2) {
     return;
