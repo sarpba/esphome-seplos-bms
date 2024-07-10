@@ -98,7 +98,7 @@ void SeplosBms::on_telemetry_data_(const std::vector<uint8_t> &data) {
     return;
   }
 
-  this->publish_state_(this->port_voltage_sensor_, (float) seplos_get_16bit(offset + 17) * 0.01f / 256.01); //just a tip need more info
+  this->publish_state_(this->port_voltage_sensor_, (float) seplos_get_16bit(offset + 17) * 0.01f / 25.601); //just a tip need more info
 }
 
 void SeplosBms::dump_config() {
