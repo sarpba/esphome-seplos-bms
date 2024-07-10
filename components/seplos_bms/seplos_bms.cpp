@@ -128,8 +128,8 @@ void SeplosBms::dump_config() {
   LOG_SENSOR("", "Temperature 2", this->temperatures_[1].temperature_sensor_);
   LOG_SENSOR("", "Temperature 3", this->temperatures_[2].temperature_sensor_);
   LOG_SENSOR("", "Temperature 4", this->temperatures_[3].temperature_sensor_);
-  LOG_SENSOR("", "Temperature 5", this->temperatures_[4].temperature_sensor_);
-  LOG_SENSOR("", "Temperature 6", this->temperatures_[5].temperature_sensor_);
+  // LOG_SENSOR("", "Temperature 5", this->temperatures_[4].temperature_sensor_);
+  // LOG_SENSOR("", "Temperature 6", this->temperatures_[5].temperature_sensor_);
   LOG_SENSOR("", "Total Voltage", this->total_voltage_sensor_);
   LOG_SENSOR("", "Current", this->current_sensor_);
   LOG_SENSOR("", "Power", this->power_sensor_);
