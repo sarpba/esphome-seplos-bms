@@ -62,7 +62,7 @@ void SeplosBms::on_telemetry_data_(const std::vector<uint8_t> &data) {
 
   for (uint8_t i = 0; i < temperature_sensors; i++) {
     float raw_temperature = (float) seplos_get_16bit(offset + 1 + (i * 2));
-    this->publish_state_(this->temperatures_[i].temperature_sensor_, (raw_temperature - 2731.0f) * 0.1f);
+    this->publish_state_(this->temperatures_[i].temperature_sensor_, raw_temperature * 0.1f);
   }
   offset = offset + 1 + (temperature_sensors * 2); // + 1
 
