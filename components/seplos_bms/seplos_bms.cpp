@@ -34,7 +34,7 @@ void SeplosBms::on_telemetry_data_(const std::vector<uint8_t> &data) {
   uint8_t min_voltage_cell = 0;
   uint8_t max_voltage_cell = 0;
   for (uint8_t i = 0; i < cells; i++) {
-    float cell_voltage = (float) seplos_get_16bit(10 + (i * 2)) * 0.001f; // Starting index adjusted to 10
+    float cell_voltage = (float) seplos_get_16bit(11 + (i * 2)) * 0.001f; // Starting index adjusted to 10
     average_cell_voltage = average_cell_voltage + cell_voltage;
     if (cell_voltage < min_cell_voltage) {
       min_cell_voltage = cell_voltage;
