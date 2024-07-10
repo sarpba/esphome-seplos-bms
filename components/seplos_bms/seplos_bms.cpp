@@ -69,7 +69,7 @@ void SeplosBms::on_telemetry_data_(const std::vector<uint8_t> &data) {
   float current = (float) ((int16_t) seplos_get_16bit(offset)) * 0.01f;
   this->publish_state_(this->current_sensor_, current);
 
-  float total_voltage = (float) seplos_get_16bit(offset + 2) * 0.01f;
+  float total_voltage = (float) seplos_get_16bit(9) * 0.01f;
   this->publish_state_(this->total_voltage_sensor_, total_voltage);
 
   float power = total_voltage * current;
