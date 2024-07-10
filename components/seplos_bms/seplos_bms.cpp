@@ -77,22 +77,22 @@ void SeplosBms::on_telemetry_data_(const std::vector<uint8_t> &data) {
   this->publish_state_(this->charging_power_sensor_, std::max(0.0f, power));
   this->publish_state_(this->discharging_power_sensor_, std::abs(std::min(0.0f, power)));
 
-  this->publish_state_(this->residual_capacity_sensor_, (float) seplos_get_16bit(offset + 5) * 0.01f);
+  this->publish_state_(this->residual_capacity_sensor_, (float) seplos_get_16bit(offset + 9) * 0.01f);
   this->publish_state_(this->battery_capacity_sensor_, (float) seplos_get_16bit(offset + 7) * 0.01f);
-  this->publish_state_(this->state_of_charge_sensor_, (float) seplos_get_16bit(offset + 11) * 0.1f);
-  this->publish_state_(this->rated_capacity_sensor_, (float) seplos_get_16bit(offset + 9) * 0.01f);
+  this->publish_state_(this->state_of_charge_sensor_, (float) seplos_get_16bit(offset + 4) * 0.1f);
+  this->publish_state_(this->rated_capacity_sensor_, (float) seplos_get_16bit(offset + 7) * 0.01f);
 
   if (data.size() < offset + 13 + 2) {
     return;
   }
 
-  this->publish_state_(this->charging_cycles_sensor_, (float) seplos_get_16bit(offset + 1));
+  this->publish_state_(this->charging_cycles_sensor_, (float) seplos_get_16bit(offset + 3));
 
   if (data.size() < offset + 15 + 2) {
     return;
   }
 
-  this->publish_state_(this->state_of_health_sensor_, (float) seplos_get_16bit(offset + 15) * 0.1f);
+  this->publish_state_(this->state_of_health_sensor_, (float) seplos_get_16bit(offset + 11) * 0.1f);
 
   if (data.size() < offset + 17 + 2) {
     return;
