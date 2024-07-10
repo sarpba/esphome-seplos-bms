@@ -1,7 +1,6 @@
 substitutions:
-  name: esphome-web-51a298
-  friendly_name: bms
-  device_description: "Monitor a Seplos BMS via RS485"
+  name: chisage
+  device_description: "Monitor a Chisage BMS via RS485"
   external_components_source: github://sarpba/esphome-seplos-bms@main
   tx_pin: GPIO16
   rx_pin: GPIO17
