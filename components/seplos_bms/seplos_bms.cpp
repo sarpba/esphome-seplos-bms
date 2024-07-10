@@ -79,8 +79,8 @@ void SeplosBms::on_telemetry_data_(const std::vector<uint8_t> &data) {
 
   this->publish_state_(this->residual_capacity_sensor_, (float) seplos_get_16bit(offset + 9) * 0.01f);
   this->publish_state_(this->battery_capacity_sensor_, (float) seplos_get_16bit(offset + 7) * 0.01f);
-  this->publish_state_(this->state_of_charge_sensor_, (float) seplos_get_16bit(offset + 4) * 0.1f);
-  this->publish_state_(this->rated_capacity_sensor_, (float) seplos_get_16bit(offset + 7) * 0.01f);
+  //this->publish_state_(this->state_of_charge_sensor_, (float) seplos_get_16bit(offset + 4) * 0.1f);
+  //this->publish_state_(this->rated_capacity_sensor_, (float) seplos_get_16bit(offset + 7) * 0.01f); //ezt még matekolni kell
 
   if (data.size() < offset + 13 + 2) {
     return;
