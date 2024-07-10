@@ -60,7 +60,7 @@ void SeplosBms::on_telemetry_data_(const std::vector<uint8_t> &data) {
   uint8_t min_voltage_cell = 0;
   uint8_t max_voltage_cell = 0;
   for (uint8_t i = 0; i < std::min((uint8_t) 16, cells); i++) {
-    float cell_voltage = (float) seplos_get_16bit(9 + (i * 2)) * 0.001f;
+    float cell_voltage = (float) seplos_get_16bit(10 + (i * 2)) * 0.001f; // Starting index adjusted to 10
     average_cell_voltage = average_cell_voltage + cell_voltage;
     if (cell_voltage < min_cell_voltage) {
       min_cell_voltage = cell_voltage;
@@ -71,7 +71,7 @@ void SeplosBms::on_telemetry_data_(const std::vector<uint8_t> &data) {
       max_voltage_cell = i + 1;
     }
     this->publish_state_(this->cells_[i].cell_voltage_sensor_, cell_voltage);
-  }
+  
   average_cell_voltage = average_cell_voltage / cells;
 
   this->publish_state_(this->min_cell_voltage_sensor_, min_cell_voltage);
@@ -81,7 +81,7 @@ void SeplosBms::on_telemetry_data_(const std::vector<uint8_t> &data) {
   this->publish_state_(this->delta_cell_voltage_sensor_, max_cell_voltage - min_cell_voltage);
   this->publish_state_(this->average_cell_voltage_sensor_, average_cell_voltage);
 
-  uint8_t offset = 9 + (cells * 2);
+  uint8_t offset = 10 + (cells * 2); // Starting index adjusted to 10
 
   //   41     0x06           Number of temperatures           6                             V
   uint8_t temperature_sensors = data[offset];
@@ -200,7 +200,7 @@ float SeplosBms::get_setup_priority() const {
   // After UART bus
   return setup_priority::BUS - 1.0f;
 }
-
+  
 void SeplosBms::update() { this->send(0x42, this->pack_); }
 
 void SeplosBms::publish_state_(binary_sensor::BinarySensor *binary_sensor, const bool &state) {
