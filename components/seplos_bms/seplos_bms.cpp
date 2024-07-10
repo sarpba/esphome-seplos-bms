@@ -71,6 +71,7 @@ void SeplosBms::on_telemetry_data_(const std::vector<uint8_t> &data) {
       max_voltage_cell = i + 1;
     }
     this->publish_state_(this->cells_[i].cell_voltage_sensor_, cell_voltage);
+  }
   
   average_cell_voltage = average_cell_voltage / cells;
 
