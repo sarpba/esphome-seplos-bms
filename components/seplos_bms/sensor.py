@@ -69,7 +69,7 @@ CONF_TEMPERATURE_3 = "temperature_3"
 CONF_TEMPERATURE_4 = "temperature_4"
 CONF_TEMPERATURE_5 = "temperature_5"
 CONF_TEMPERATURE_6 = "temperature_6"
-CONF_TEMPERATURE_6 = "temperature_7"
+CONF_TEMPERATURE_7 = "temperature_7"
 
 ICON_CURRENT_DC = "mdi:current-dc"
 ICON_MIN_VOLTAGE_CELL = "mdi:battery-minus-outline"
