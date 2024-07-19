@@ -55,9 +55,13 @@ void SeplosBms::on_telemetry_data_(const std::vector<uint8_t> &data) {
   this->publish_state_(this->delta_cell_voltage_sensor_, max_cell_voltage - min_cell_voltage);
   this->publish_state_(this->average_cell_voltage_sensor_, average_cell_voltage);
 
+  this->publish_state_(this->temperatures_[4].temperature_sensor_, (float) seplos_get_16bit(44) * 0.01f)
+  this->publish_state_(this->temperatures_[5].temperature_sensor_, (float) seplos_get_16bit(46) * 0.01f) 
+  this->publish_state_(this->temperatures_[6].temperature_sensor_, (float) seplos_get_16bit(48) * 0.01f)
+    
   uint8_t offset = 18 + (cells * 2); // Starting index adjusted to 18
 
-  uint8_t temperature_sensors = 4; // Az adat formátuma szerint fixen 6 hőmérséklet szenzor van
+  uint8_t temperature_sensors = 4; // Az adat formátuma szerint fixen 7 hőmérséklet szenzor van
   ESP_LOGV(TAG, "Number of temperature sensors: %d", temperature_sensors);
 
   for (uint8_t i = 0; i < temperature_sensors; i++) {
@@ -81,6 +85,8 @@ void SeplosBms::on_telemetry_data_(const std::vector<uint8_t> &data) {
   this->publish_state_(this->battery_capacity_sensor_, (float) seplos_get_16bit(offset + 7) * 0.01f);
   //this->publish_state_(this->state_of_charge_sensor_, (float) seplos_get_16bit(offset + 4) * 0.1f);
   this->publish_state_(this->rated_capacity_sensor_, (float) seplos_get_16bit(7) * 0.01f); 
+
+
   
   if (data.size() < offset + 5 + 2) {
     return;
@@ -129,8 +135,9 @@ void SeplosBms::dump_config() {
   LOG_SENSOR("", "Temperature 2", this->temperatures_[1].temperature_sensor_);
   LOG_SENSOR("", "Temperature 3", this->temperatures_[2].temperature_sensor_);
   LOG_SENSOR("", "Temperature 4", this->temperatures_[3].temperature_sensor_);
-  // LOG_SENSOR("", "Temperature 5", this->temperatures_[4].temperature_sensor_);
-  // LOG_SENSOR("", "Temperature 6", this->temperatures_[5].temperature_sensor_);
+  LOG_SENSOR("", "Temperature 5", this->temperatures_[4].temperature_sensor_);
+  LOG_SENSOR("", "Temperature 6", this->temperatures_[5].temperature_sensor_);
+  LOG_SENSOR("", "Temperature 7", this->temperatures_[6].temperature_sensor_); 
   LOG_SENSOR("", "Total Voltage", this->total_voltage_sensor_);
   LOG_SENSOR("", "Current", this->current_sensor_);
   LOG_SENSOR("", "Power", this->power_sensor_);
