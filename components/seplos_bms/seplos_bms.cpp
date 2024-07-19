@@ -55,7 +55,7 @@ void SeplosBms::on_telemetry_data_(const std::vector<uint8_t> &data) {
   this->publish_state_(this->delta_cell_voltage_sensor_, max_cell_voltage - min_cell_voltage);
   this->publish_state_(this->average_cell_voltage_sensor_, average_cell_voltage);
 
-  uint8_t offset = 18 + (cells * 2); // Starting index adjusted to 12
+  uint8_t offset = 18 + (cells * 2); // Starting index adjusted to 18
 
   uint8_t temperature_sensors = 4; // Az adat formátuma szerint fixen 6 hőmérséklet szenzor van
   ESP_LOGV(TAG, "Number of temperature sensors: %d", temperature_sensors);
@@ -80,25 +80,26 @@ void SeplosBms::on_telemetry_data_(const std::vector<uint8_t> &data) {
   this->publish_state_(this->residual_capacity_sensor_, (float) seplos_get_16bit(offset + 9) * 0.01f);
   this->publish_state_(this->battery_capacity_sensor_, (float) seplos_get_16bit(offset + 7) * 0.01f);
   //this->publish_state_(this->state_of_charge_sensor_, (float) seplos_get_16bit(offset + 4) * 0.1f);
-  //this->publish_state_(this->rated_capacity_sensor_, (float) seplos_get_16bit(offset + 7) * 0.01f); //ezt még matekolni kell
-
-  if (data.size() < offset + 13 + 2) {
-    return;
-  }
-
-  this->publish_state_(this->charging_cycles_sensor_, (float) seplos_get_16bit(offset + 11));
-
-  if (data.size() < offset + 15 + 2) {
+  this->publish_state_(this->rated_capacity_sensor_, (float) seplos_get_16bit(7) * 0.01f); 
+  
+  if (data.size() < offset + 5 + 2) {
     return;
   }
 
   this->publish_state_(this->state_of_health_sensor_, (float) seplos_get_16bit(offset + 5) * 0.1f / 25.601); //just a tip need more info
 
-  if (data.size() < offset + 17 + 2) {
+
+  if (data.size() < offset + 11 + 2) {
     return;
   }
 
-  this->publish_state_(this->port_voltage_sensor_, (float) seplos_get_16bit(offset + 17) * 0.01f);
+  this->publish_state_(this->charging_cycles_sensor_, (float) seplos_get_16bit(offset + 11));
+
+//  if (data.size() < offset + 17 + 2) {
+//    return;
+//  }
+//
+//  this->publish_state_(this->port_voltage_sensor_, (float) seplos_get_16bit(offset + 17) * 0.01f);
 }
 
 void SeplosBms::dump_config() {
@@ -138,7 +139,7 @@ void SeplosBms::dump_config() {
   LOG_SENSOR("", "Charging cycles", this->charging_cycles_sensor_);
   // LOG_SENSOR("", "State of charge", this->state_of_charge_sensor_);
   LOG_SENSOR("", "Residual capacity", this->residual_capacity_sensor_);
-  // LOG_SENSOR("", "Battery capacity", this->battery_capacity_sensor_);
+  LOG_SENSOR("", "Battery capacity", this->battery_capacity_sensor_);
   LOG_SENSOR("", "Rated capacity", this->rated_capacity_sensor_);
   LOG_SENSOR("", "Charging cycles", this->charging_cycles_sensor_);
   LOG_SENSOR("", "State of health", this->state_of_health_sensor_);
