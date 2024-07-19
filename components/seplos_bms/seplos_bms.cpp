@@ -95,8 +95,8 @@ void SeplosBms::on_telemetry_data_(const std::vector<uint8_t> &data) {
     return;
   }
   
-  this->publish_state_(this->temperatures_[4].temperature_sensor_, (float) seplos_get_16bit(44) * 0.01f);
-  this->publish_state_(this->temperatures_[5].temperature_sensor_, (float) seplos_get_16bit(46) * 0.01f); 
+//  this->publish_state_(this->temperatures_[4].temperature_sensor_, (float) seplos_get_16bit(44) * 0.01f);
+//  this->publish_state_(this->temperatures_[5].temperature_sensor_, (float) seplos_get_16bit(46) * 0.01f); 
 //  this->publish_state_(this->temperatures_[6].temperature_sensor_, (float) seplos_get_16bit(48) * 0.01f);
   this->publish_state_(this->charging_cycles_sensor_, (float) seplos_get_16bit(offset + 11));
 
