@@ -54,10 +54,6 @@ void SeplosBms::on_telemetry_data_(const std::vector<uint8_t> &data) {
   this->publish_state_(this->min_voltage_cell_sensor_, (float) min_voltage_cell);
   this->publish_state_(this->delta_cell_voltage_sensor_, max_cell_voltage - min_cell_voltage);
   this->publish_state_(this->average_cell_voltage_sensor_, average_cell_voltage);
-
-  this->publish_state_(this->temperatures_[4].temperature_sensor_, (float) seplos_get_16bit(44) * 0.01f);
-  this->publish_state_(this->temperatures_[5].temperature_sensor_, (float) seplos_get_16bit(46) * 0.01f); 
-  this->publish_state_(this->temperatures_[6].temperature_sensor_, (float) seplos_get_16bit(48) * 0.01f);
     
   uint8_t offset = 18 + (cells * 2); // Starting index adjusted to 18
 
@@ -98,7 +94,10 @@ void SeplosBms::on_telemetry_data_(const std::vector<uint8_t> &data) {
   if (data.size() < offset + 11 + 2) {
     return;
   }
-
+  
+  this->publish_state_(this->temperatures_[4].temperature_sensor_, (float) seplos_get_16bit(44) * 0.01f);
+  this->publish_state_(this->temperatures_[5].temperature_sensor_, (float) seplos_get_16bit(46) * 0.01f); 
+//  this->publish_state_(this->temperatures_[6].temperature_sensor_, (float) seplos_get_16bit(48) * 0.01f);
   this->publish_state_(this->charging_cycles_sensor_, (float) seplos_get_16bit(offset + 11));
 
 //  if (data.size() < offset + 17 + 2) {
@@ -137,7 +136,7 @@ void SeplosBms::dump_config() {
   LOG_SENSOR("", "Temperature 4", this->temperatures_[3].temperature_sensor_);
   LOG_SENSOR("", "Temperature 5", this->temperatures_[4].temperature_sensor_);
   LOG_SENSOR("", "Temperature 6", this->temperatures_[5].temperature_sensor_);
-  LOG_SENSOR("", "Temperature 7", this->temperatures_[6].temperature_sensor_); 
+  //LOG_SENSOR("", "Temperature 7", this->temperatures_[6].temperature_sensor_); 
   LOG_SENSOR("", "Total Voltage", this->total_voltage_sensor_);
   LOG_SENSOR("", "Current", this->current_sensor_);
   LOG_SENSOR("", "Power", this->power_sensor_);
